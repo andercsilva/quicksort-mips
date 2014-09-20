@@ -1,0 +1,15 @@
+.data
+	txtLido: .asciiz "O valor lido é "
+.text
+	.globl main
+main:
+	li $v0, 5 #5 significa que é inteiro e le o numero digitado no teclado
+	syscall #le inteiro
+	move $t0, $v0 #x = getchar()
+	li $v0, 4 #significa que imprime texto
+	la $a0, txtLido #endereço do texto
+	syscall #imprime o texto
+	li $v0, 1 #significa que vai imprimir inteiro
+	move $a0, $t0
+	syscall #imprime valor lido
+	jr $ra

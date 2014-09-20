@@ -1,0 +1,33 @@
+.data
+	txtInsert: .asciiz "Insira um valor: "
+	txtResult: .asciiz "Soma="
+.text
+	.globl main
+main:
+	move $s0, $ra #salva posição de retorno
+	jal leOperando #opA =getChar
+	move $t0, $v0
+	jal leOperando #opB =getChar
+	move $t1, $v0
+	move $a0, $t0 #defineparametros
+	move $a1, $t1
+	jal ImprimeSoma
+	move $ra, $s0 #restaura ponto de retorno
+	jr $ra
+leOperando:
+	li $v0, 4
+	la $a0, txtInsert
+	syscall #executa printf
+	li $v0, 5
+	syscall #executagetchar
+	jr $ra
+ImprimeSoma:
+	move $t2, $a0 #salva params
+	move $t3, $a1
+	li $v0, 4
+	la $a0, txtResult
+	syscall #printf texto
+	li $v0, 1
+	add $a0, $t2, $t3
+	syscall #printf resultado
+	jr $ra

@@ -1,0 +1,22 @@
+.data
+	texto: .asciiz "O resultado da soma é "
+.text
+	.globl main
+main:
+	li $v0, 5 
+	syscall
+	move $t0, $v0 # index = getchar()
+	li $t1, 0 # soma = 0
+loop:
+	blez $t0, imprime
+	add $t1, $t1, $t0
+	addi $t0, $t0, -1
+	j loop
+imprime:
+	li $v0, 4 #significa que vai receber texto
+	la $a0, texto #carrega o texto do endereço
+	syscall #imprime o texto
+	li $v0, 1 #sifinifica que vai receber inteiro
+	move $a0, $t1
+	syscall #imprime o inteiro
+	jr $ra

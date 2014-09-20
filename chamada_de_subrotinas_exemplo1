@@ -1,0 +1,21 @@
+.data
+	txtImpressao: .asciiz "Imprimindo valor "
+.text
+	.globl main
+main:
+	move $s0, $ra # salva o endereço de retorno
+	li $v0, 5
+	syscall #executar getchar
+	move $a0, $v0
+	jal ImprimeValor #chama subrotina e salva o ponto de retorno
+	move $ra, $s0
+	jr $ra
+ImprimeValor:
+	move $t0, $a0 #salva valor a ser impresso
+	li $v0, 4
+	la $a0, txtImpressao
+	syscall #imprime texto
+	li $v0, 1
+	move $a0, $t0 # restaura valor a ser impresso
+	syscall
+	jr $ra

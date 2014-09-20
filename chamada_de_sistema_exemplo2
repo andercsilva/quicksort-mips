@@ -1,0 +1,17 @@
+.data
+	operadorA: .space 4
+.text
+	.globl main
+main:
+	move $s0, $ra # salva o endereço de retorno
+	li $v0, 5
+	syscall #executar getchar
+	move $a0, $v0 #define parametro
+	jal inc #chama subrotina e salva o ponto de retorno
+	sw $v0, operadorA($zero)
+	move $ra, $s0 #restaura ponto de retorno anterior
+	jr $ra
+inc:
+	addi $v0, $a0, 1 #retorno feito com registrador $v0
+	jr $ra
+	
